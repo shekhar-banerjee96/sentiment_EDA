@@ -25,10 +25,10 @@ geolocator = Nominatim(user_agent = "geoapiExercises")
 ps = PorterStemmer()
 
 
-consumer_key = 'Sbt9NaECglzy1ANMIieTl6Z7v'
-consumer_secret = '7CciWJpc0XVUHwoIq2JfcxunOHPiWAVK1JgbXTzfxgvaq50s3S'
-access_token = '1010182502332297216-Lp3RpmiWAhSA29Stuwsk4RML14k3u5'
-access_secret = 'KWScBBt4XRw5WfPkJmAEqNMqKTy8mDJI4cbqXJjm8Hles'
+consumer_key = ''
+consumer_secret = ''
+access_token = '-'
+access_secret = ''
 
 # Authenticate to Twitter
 auth = tw.OAuthHandler(consumer_key,consumer_secret)
