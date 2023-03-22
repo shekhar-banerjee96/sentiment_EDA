@@ -1,3 +1,4 @@
+#import Libraries
 import streamlit as st
 import pandas as pd
 import nltk ,emoji , re ,string , pickle
@@ -15,7 +16,7 @@ import seaborn as sns
 import tweepy as tw
 
 
-
+#Do necessary downloads and initliate classes 
 nltk.download('punkt')
 nltk.download('stopwords')
 plt.rcParams.update({'axes.facecolor':'black'})
@@ -24,7 +25,7 @@ stop_words = set(stopwords.words('english'))
 geolocator = Nominatim(user_agent = "geoapiExercises")
 ps = PorterStemmer()
 
-
+#Set Credentials for Tweepy API
 consumer_key = ''
 consumer_secret = ''
 access_token = '-'
@@ -47,12 +48,16 @@ df = pd.DataFrame(columns=['created_at', 'Location', 'text'])
 
 st.title("Twitter Sentiment EDA")
 
+#Enter you search string
 input_sms = st.text_area("Enter the hastag example #India , #Tesla")
 
 
 
 
 def countries(x):
+    #This function will use the Geolocator API and find the Country of the user. 
+    # we split the reslt and provide the last part which contains tge country name.
+     
     try:
         location = geolocator.geocode(x,language='en')
         return str(location.raw['display_name'].split(',')[-1]).strip()
@@ -63,8 +68,7 @@ def basic_clean(x,type) :
 
   ignore  = ['rt','https']  
   words  = emoji.demojize(x.lower())
-  #print(words)
-  
+   
   
   words = re.sub('[^a-zA-Z0-9\n\.]', ' ', "".join(words))
   
@@ -80,15 +84,17 @@ def basic_clean(x,type) :
         final.append(ps.stem(word))
 
   words =  ' '.join(final[:])
-  #print(words)
+  
   return words
 
 
-
+#This button initiate the Data Import using the input tring from above 
 if st.button('Print Report'):
     popular_tweets = api.search_tweets(q="#china", lang="en",result_type = 'mixed',count=100)
     for tweet in popular_tweets:
-        #print(f"{tweet.user.name}:{tweet.text}")
+        #pull data fields as per requirements , for now pulling timestamp which will act like id , user name , location , tweet text
+        # we will geolocator api to find the country name from the location data.
+
         delta = pd.DataFrame({
                     'created_at': tweet.user.created_at ,
                 'user' : tweet.user.name,
@@ -101,7 +107,7 @@ if st.button('Print Report'):
     print('Data Imported')
 
 
-
+    # Count plot to show the distribution of comments comments between the various countries whose people tweeted
     with sns.axes_style("darkgrid"):
         sns.countplot(data = df ,y = 'Countries',orient="v",order = df['Countries'].value_counts().index)    
     time = datetime.now().strftime("%H%M%S")    
@@ -114,12 +120,15 @@ if st.button('Print Report'):
 
     # Feature to use emotion classifier to segregate emotions and disply the chart showing the split
 
+    # loading trained classifier that can differentaite between postive and negative tweets
+    # Its has been trained ober 1.6 million data records conataining of real time tweets.
+    # dataset picked from kaggle
 
     df['cleaned_text'] = df['text'].apply(lambda x :  basic_clean(x,'simple'))
     model = pickle.load(open('model/sgdc.pkl', 'rb'))
     pipe = pickle.load(open('model/pipe.pkl', 'rb'))
 
-    
+    # prediction of tweets and providing them string labels for better visualizations
     corpus_vector = pipe.transform(df['cleaned_text']).toarray()
     df['reaction'] = model.predict(corpus_vector)
     df['reaction'] = df['reaction'].apply(lambda x : 'Pos' if x == 1 else 'Neg')
@@ -127,7 +136,7 @@ if st.button('Print Report'):
     
     
     
-
+    
     with sns.axes_style("darkgrid"):            
         sns.countplot(data = df ,y = 'Countries',orient="v",hue = 'reaction',order = df['Countries'].value_counts().index)
         
