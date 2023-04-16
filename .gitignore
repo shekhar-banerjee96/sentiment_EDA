@@ -152,3 +152,4 @@ cython_debug/
 #.idea/
 emotion.csv
 twitter_extract.ipynb
+cred.cfg
