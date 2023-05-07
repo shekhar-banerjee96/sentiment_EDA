@@ -1,7 +1,6 @@
 scikit-learn
 nltk
 emoji==2.2.0
-pickle
 wordcloud
 tweepy
 seaborn
