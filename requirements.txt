@@ -1,8 +1,8 @@
 scikit-learn
 nltk
-emoji
+emoji==2.2.0
 pickle
 wordcloud
 tweepy
 seaborn
-geopy
+geopy==2.3.0
