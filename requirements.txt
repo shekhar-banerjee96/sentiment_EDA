@@ -1,0 +1,8 @@
+scikit-learn
+nltk
+emoji
+pickle
+wordcloud
+tweepy
+seaborn
+geopy
