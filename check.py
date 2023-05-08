@@ -24,6 +24,7 @@ nltk.download('punkt')
 nltk.download('stopwords')
 #plt.rcParams.update({'axes.facecolor':'black'})
 #plt.style.use('seaborn-v0_8-dark-palette')
+sns.set_color_codes(palette='deep')
 stop_words = set(stopwords.words('english'))
 geolocator = Nominatim(user_agent = "geoapiExercises")
 ps = PorterStemmer()
@@ -116,7 +117,8 @@ if st.button('Print Report'):
         # Count plot to show the distribution of comments between the various countries whose people tweeted
         with sns.axes_style("darkgrid"):
             fig = plt.figure(figsize = (10,8), facecolor = None)
-            sns.countplot(data = df ,y = 'Countries',orient="v",order = df['Countries'].value_counts().iloc[:20].index)    
+            sns.countplot(data = df ,y = 'Countries',orient="v",color  = 'b'
+                          palette = sns.color_palette("pastel") ,order = df['Countries'].value_counts().iloc[:20].index)    
             plt.title('Top Contributing Countries')
             plt.ylabel('Countries', fontsize=12)
             plt.xlabel('Frequency of Comments', fontsize=12)
