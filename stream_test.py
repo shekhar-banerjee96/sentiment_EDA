@@ -23,7 +23,7 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 nltk.download('punkt')
 nltk.download('stopwords')
 plt.rcParams.update({'axes.facecolor':'black'})
-plt.style.use('seaborn-v0_8-dark-palette')
+plt.style.use('seaborn-darkgrid')
 
 stop_words = set(stopwords.words('english'))
 geolocator = Nominatim(user_agent = "geoapiExercises")
@@ -115,14 +115,14 @@ if st.button('Print Report'):
 
     with col1:
         # Count plot to show the distribution of comments between the various countries whose people tweeted
-        with sns.axes_style("darkgrid"):
-            fig = plt.figure(figsize = (10,8), facecolor = None)
-            sns.countplot(data = df ,y = 'Countries',orient="v",color='#5975a4',palette = sns.color_palette("pastel") ,order = df['Countries'].value_counts().iloc[:20].index)    
-            plt.title('Top Contributing Countries')
-            plt.ylabel('Countries', fontsize=12)
-            plt.xlabel('Frequency of Comments', fontsize=12)
-            st.pyplot(fig)
-            plt.clf()
+        
+        fig = plt.figure(figsize = (10,8), facecolor = None)
+        sns.countplot(data = df ,y = 'Countries',orient="v",color='#5975a4',palette = sns.color_palette("pastel") ,order = df['Countries'].value_counts().iloc[:20].index)    
+        plt.title('Top Contributing Countries')
+        plt.ylabel('Countries', fontsize=12)
+        plt.xlabel('Frequency of Comments', fontsize=12)
+        st.pyplot(fig)
+        plt.clf()
 
         # Feature to use emotion classifier to segregate emotions and disply the chart showing the split
 
@@ -143,14 +143,14 @@ if st.button('Print Report'):
         
         
     with col2:   
-        with sns.axes_style("darkgrid"):
-            fig = plt.figure(figsize = (10,8), facecolor = None)            
-            sns.countplot(data = df ,y = 'Countries',orient="v",hue = 'reaction',order = df['Countries'].value_counts().iloc[:20].index)
-            plt.title('Positive / Negative Reviews Distribution')
-            plt.ylabel('Countries', fontsize=12)
-            plt.xlabel('Frequency of Comments', fontsize=12)
-            st.pyplot(fig)
-            plt.clf()
+        
+        fig = plt.figure(figsize = (10,8), facecolor = None)            
+        sns.countplot(data = df ,y = 'Countries',orient="v",hue = 'reaction',order = df['Countries'].value_counts().iloc[:20].index)
+        plt.title('Positive / Negative Reviews Distribution')
+        plt.ylabel('Countries', fontsize=12)
+        plt.xlabel('Frequency of Comments', fontsize=12)
+        st.pyplot(fig)
+        plt.clf()
         
 
 
