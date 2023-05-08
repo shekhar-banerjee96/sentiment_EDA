@@ -22,9 +22,9 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 #Do necessary downloads and initliate classes 
 nltk.download('punkt')
 nltk.download('stopwords')
-#plt.rcParams.update({'axes.facecolor':'black'})
-#plt.style.use('seaborn-v0_8-dark-palette')
-sns.set_color_codes(palette='deep')
+plt.rcParams.update({'axes.facecolor':'black'})
+plt.style.use('seaborn-v0_8-dark-palette')
+
 stop_words = set(stopwords.words('english'))
 geolocator = Nominatim(user_agent = "geoapiExercises")
 ps = PorterStemmer()
@@ -98,7 +98,7 @@ if st.button('Print Report'):
     # a dedicated single loader 
         
       
-    popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(10)
+    popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(200)
     for tweet in popular_tweets:
         #pull data fields as per requirements , for now pulling timestamp which will act like id , user name , location , tweet text
         # we will geolocator api to find the country name from the location data.
