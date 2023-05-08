@@ -23,7 +23,7 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 nltk.download('punkt')
 nltk.download('stopwords')
 plt.rcParams.update({'axes.facecolor':'black'})
-plt.style.use('seaborn-darkgrid')
+sns.set_style("darkgrid")
 
 stop_words = set(stopwords.words('english'))
 geolocator = Nominatim(user_agent = "geoapiExercises")
