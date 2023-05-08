@@ -12,7 +12,6 @@ from nltk.stem import PorterStemmer
 from collections import Counter
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
-from PIL import Image
 import seaborn as sns
 import tweepy as tw
 #import hydralit_components as hc
@@ -30,7 +29,6 @@ geolocator = Nominatim(user_agent = "geoapiExercises")
 ps = PorterStemmer()
 
 #Set Credentials for Tweepy API
-import configparser
 
 consumer_key = st.secrets['cred']['consumer_key']
 consumer_secret = st.secrets['cred']['consumer_secret']
@@ -117,7 +115,7 @@ if st.button('Print Report'):
         # Count plot to show the distribution of comments between the various countries whose people tweeted
         
         fig = plt.figure(figsize = (10,8), facecolor = None)
-        sns.countplot(data = df ,y = 'Countries',orient="v",color='#5975a4',palette = sns.color_palette("pastel") ,order = df['Countries'].value_counts().iloc[:20].index)    
+        sns.countplot(data = df ,y = 'Countries',orient="v" ,order = df['Countries'].value_counts().iloc[:20].index)    
         plt.title('Top Contributing Countries')
         plt.ylabel('Countries', fontsize=12)
         plt.xlabel('Frequency of Comments', fontsize=12)
