@@ -23,7 +23,7 @@ import time
 nltk.download('punkt')
 nltk.download('stopwords')
 sns.color_palette("cubehelix", as_cmap=True)
-sns.set_theme(style="darkgrid", palette="pastel")
+#sns.set_theme(style="darkgrid", palette="pastel")
 stop_words = set(stopwords.words('english'))
 geolocator = Nominatim(user_agent = "geoapiExercises")
 ps = PorterStemmer()
