@@ -5,6 +5,6 @@ import seaborn as sns
 
 fig , ax = plt.subplots()
 df = sns.load_dataset("penguins")
-fig,_ = sns.barplot(data=df, x="island", y="body_mass_g",ax=ax)
+sns.barplot(data=df, x="island", y="body_mass_g",ax=ax)
 
 st.pyplot(fig)
