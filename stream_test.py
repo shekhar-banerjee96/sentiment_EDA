@@ -98,7 +98,7 @@ if st.button('Print Report'):
     # a dedicated single loader 
         
       
-    popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(200)
+    popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(20)
     for tweet in popular_tweets:
         #pull data fields as per requirements , for now pulling timestamp which will act like id , user name , location , tweet text
         # we will geolocator api to find the country name from the location data.
