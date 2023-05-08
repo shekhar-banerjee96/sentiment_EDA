@@ -18,25 +18,25 @@ import tweepy as tw
 #import hydralit_components as hc
 import time
 
-
+st.set_option('deprecation.showPyplotGlobalUse', False)
 #Do necessary downloads and initliate classes 
 nltk.download('punkt')
 nltk.download('stopwords')
-sns.color_palette("cubehelix", as_cmap=True)
-#sns.set_theme(style="darkgrid", palette="pastel")
+#plt.rcParams.update({'axes.facecolor':'black'})
+#plt.style.use('seaborn-v0_8-dark-palette')
 stop_words = set(stopwords.words('english'))
 geolocator = Nominatim(user_agent = "geoapiExercises")
 ps = PorterStemmer()
 
 #Set Credentials for Tweepy API
-#import configparser
+import configparser
 
-#config = configparser.ConfigParser()
-#config.read_file(open(r'cred.cfg'))
-consumer_key = st.secrets['cred']['consumer_key']
-consumer_secret = st.secrets['cred']['consumer_secret']
-access_token = st.secrets['cred']['access_token']
-access_secret = st.secrets['cred']['access_secret']
+config = configparser.ConfigParser()
+config.read_file(open(r'cred.cfg'))
+consumer_key = config.get('cred', 'consumer_key')
+consumer_secret = config.get('cred', 'consumer_secret')
+access_token = config.get('cred', 'access_token')
+access_secret = config.get('cred', 'access_secret')
 
 # Authenticate to Twitter
 auth = tw.OAuthHandler(consumer_key,consumer_secret)
@@ -99,7 +99,7 @@ if st.button('Print Report'):
     # a dedicated single loader 
         
       
-    popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(50)
+    popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(10)
     for tweet in popular_tweets:
         #pull data fields as per requirements , for now pulling timestamp which will act like id , user name , location , tweet text
         # we will geolocator api to find the country name from the location data.
@@ -116,15 +116,14 @@ if st.button('Print Report'):
 
     with col1:
         # Count plot to show the distribution of comments between the various countries whose people tweeted
-        plt.figure(figsize = (10,8), facecolor = None)
-        sns.countplot(data = df ,y = 'Countries',orient="v",order = df['Countries'].value_counts().index)                
-        time = datetime.now().strftime("%H%M%S")    
-        fname = input_sms.replace('#','') + time + '.jpg'
-        plt.savefig(fname,bbox_inches = 'tight')
-        st.header("Top Contributing Countries")
-        image = Image.open(fname)
-        st.image(fname)
-        plt.clf()
+        with sns.axes_style("darkgrid"):
+            fig = plt.figure(figsize = (10,8), facecolor = None)
+            sns.countplot(data = df ,y = 'Countries',orient="v",order = df['Countries'].value_counts().iloc[:20].index)    
+            plt.title('Top Contributing Countries')
+            plt.ylabel('Countries', fontsize=12)
+            plt.xlabel('Frequency of Comments', fontsize=12)
+            st.pyplot(fig)
+            plt.clf()
 
         # Feature to use emotion classifier to segregate emotions and disply the chart showing the split
 
@@ -145,19 +144,16 @@ if st.button('Print Report'):
         
         
     with col2:   
-        
-        plt.figure(figsize = (10,8), facecolor = None)            
-        sns.countplot(data = df ,y = 'Countries',orient="v",hue = 'reaction',order = df['Countries'].value_counts().index)
-            
+        with sns.axes_style("darkgrid"):
+            fig = plt.figure(figsize = (10,8), facecolor = None)            
+            sns.countplot(data = df ,y = 'Countries',orient="v",hue = 'reaction',order = df['Countries'].value_counts().iloc[:20].index)
+            plt.title('Positive / Negative Reviews Distribution')
+            plt.ylabel('Countries', fontsize=12)
+            plt.xlabel('Frequency of Comments', fontsize=12)
+            st.pyplot(fig)
+            plt.clf()
         
 
-        time = datetime.now().strftime("%H%M%S")  
-        fname = input_sms.replace('#','') + time + '_pos_neg_dist.jpg'  
-        plt.savefig(fname,bbox_inches = 'tight')
-        st.header("Positive / Negative Reviews Distribution")
-        image = Image.open(fname)
-        st.image(fname, caption='Positive / Negative Reviews Distribution')
-        plt.clf()
 
  
 
@@ -168,54 +164,29 @@ if st.button('Print Report'):
     with col1:
         body = ''.join(df[df['reaction'] == 'Pos']['text'])
         wc = WordCloud(width = 500 , height = 500).generate(body)
-        plt.figure(figsize = (12, 8), facecolor = None)
-        plt.imshow(wc)
-        st.header("Negative Comment Wordcloud")
-        time = datetime.now().strftime("%H%M%S")  
-        fname = input_sms.replace('#','') + time + '_neg_wordcloud.jpg'  
-        plt.savefig(fname,bbox_inches = 'tight')
-        image = Image.open(fname)
-        st.image(fname)
+        plt.imshow(wc,interpolation='bilinear')
+        st.header("Positive Comment Wordcloud")
+        st.pyplot()
+        
         plt.clf()
 
     with col2:
-        body = ''.join(df[df['reaction'] == 'Pos']['text'])
+        ody = ''.join(df[df['reaction'] == 'Neg']['text'])
         wc = WordCloud(width = 500 , height = 500).generate(body)
-        plt.figure(figsize = (12, 8), facecolor = None)
-        plt.imshow(wc)
-        st.header("Positive Comment Wordcloud")
-        time = datetime.now().strftime("%H%M%S")  
-        fname = input_sms.replace('#','') + time + '_pos_wordcloud.jpg'  
-        plt.savefig(fname,bbox_inches = 'tight')
-        image = Image.open(fname)
-        st.image(fname)
+        plt.imshow(wc,interpolation='bilinear')
+        st.header("Negative Comment Wordcloud")
+        st.pyplot()
+        
         plt.clf()
-        image.close()
 
     with col3:
-        palette_color = sns.color_palette('bright')
-        plt.figure(figsize = (12,8), facecolor = None)
-        plt.pie(Counter(df.reaction).values(), labels=['Negative','Positive'], colors=palette_color, autopct='%.0f%%',radius=0.96)
-        plt.title('Distribution of Positive / Negative')
-        
-        time = datetime.now().strftime("%H%M%S")  
-        fname = input_sms.replace('#','') + time + '_total_pos_neg_dist.jpg'  
-        plt.savefig(fname,bbox_inches = 'tight')
-        st.header(" Positive / Negative Distribution For Total")
-        
-        image = Image.open(fname)
-        st.image(fname)
+        palette_color = sns.color_palette('bright') 
+        fig, ax = plt.subplots()
+        print(Counter(df.reaction))
+        ax.pie(Counter(df.reaction).values(), labels=['Negative','Positive'], colors=palette_color, autopct='%.0f%%',radius=0.96)
+        st.header('Distribution of Positive / Negative')
+        st.pyplot(fig)
         plt.clf()
-        image.close()
-
-
-import os
-
-files = os.listdir()
-
-for i in files:
-    if (i.split(".")[-1] == 'jpg') :
-        os.remove(i)
     
 
 
