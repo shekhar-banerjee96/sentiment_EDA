@@ -102,21 +102,20 @@ def basic_clean(x,type) :
 
 
 #This button initiate the Data Import using the input tring from above 
-if st.button('Print Report'):
-    # a dedicated single loader 
+
         
       
-    popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(20)
-    for tweet in popular_tweets:
-        #pull data fields as per requirements , for now pulling timestamp which will act like id , user name , location , tweet text
-        # we will geolocator api to find the country name from the location data.
+popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(20)
+for tweet in popular_tweets:
+    #pull data fields as per requirements , for now pulling timestamp which will act like id , user name , location , tweet text
+    # we will geolocator api to find the country name from the location data.
 
-        delta = pd.DataFrame({
-            'text': basic_clean(tweet._json['full_text'],'wc')
-            ,'Countries': countries(tweet._json['user']['location'])
-            ,'cleaned_text': basic_clean(tweet._json['full_text'],'simple')
-                                }, index= [tweet.id])
-        df = pd.concat([delta , df ])
+    delta = pd.DataFrame({
+        'text': basic_clean(tweet._json['full_text'],'wc')
+        ,'Countries': countries(tweet._json['user']['location'])
+        ,'cleaned_text': basic_clean(tweet._json['full_text'],'simple')
+                            }, index= [tweet.id])
+    df = pd.concat([delta , df ])
 
-    print('Data Imported')
-    st.dataframe(df.head())
+print('Data Imported')
+st.dataframe(df.head())
