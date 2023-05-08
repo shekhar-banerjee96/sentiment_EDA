@@ -99,7 +99,7 @@ if st.button('Print Report'):
     # a dedicated single loader 
         
       
-    popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(200)
+    popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(500)
     for tweet in popular_tweets:
         #pull data fields as per requirements , for now pulling timestamp which will act like id , user name , location , tweet text
         # we will geolocator api to find the country name from the location data.
@@ -118,7 +118,7 @@ if st.button('Print Report'):
         # Count plot to show the distribution of comments between the various countries whose people tweeted
         with sns.axes_style("darkgrid"):
             plt.figure(figsize = (10,8), facecolor = None)
-            sns.countplot(data = df ,y = 'Countries',orient="v",order = df['Countries'].value_counts().iloc[:20].index)    
+            sns.countplot(data = df ,y = 'Countries',orient="v",order = df['Countries'].value_counts().iloc[:10].index)    
         time = datetime.now().strftime("%H%M%S")    
         fname = input_sms.replace('#','') + time + '.jpg'
         plt.savefig(fname,bbox_inches = 'tight')
@@ -148,7 +148,7 @@ if st.button('Print Report'):
     with col2:   
         with sns.axes_style("darkgrid"):
             plt.figure(figsize = (10,8), facecolor = None)            
-            sns.countplot(data = df ,y = 'Countries',orient="v",hue = 'reaction',order = df['Countries'].value_counts().iloc[:20].index)
+            sns.countplot(data = df ,y = 'Countries',orient="v",hue = 'reaction',order = df['Countries'].value_counts().iloc[:10].index)
             
         
 
