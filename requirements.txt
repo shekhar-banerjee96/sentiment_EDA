@@ -1,7 +1,7 @@
 scikit-learn
 nltk
 emoji==2.2.0
-wordcloud
+wordcloud==1.8.2.2
 tweepy
-seaborn
+seaborn==0.12.2
 geopy==2.3.0
