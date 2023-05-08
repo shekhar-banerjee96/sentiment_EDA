@@ -31,12 +31,10 @@ ps = PorterStemmer()
 #Set Credentials for Tweepy API
 import configparser
 
-config = configparser.ConfigParser()
-config.read_file(open(r'cred.cfg'))
-consumer_key = config.get('cred', 'consumer_key')
-consumer_secret = config.get('cred', 'consumer_secret')
-access_token = config.get('cred', 'access_token')
-access_secret = config.get('cred', 'access_secret')
+consumer_key = st.secrets['cred']['consumer_key']
+consumer_secret = st.secrets['cred']['consumer_secret']
+access_token = st.secrets['cred']['access_token']
+access_secret = st.secrets['cred']['access_secret']
 
 # Authenticate to Twitter
 auth = tw.OAuthHandler(consumer_key,consumer_secret)
