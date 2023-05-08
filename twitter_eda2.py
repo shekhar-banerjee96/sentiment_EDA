@@ -22,8 +22,7 @@ import time
 #Do necessary downloads and initliate classes 
 nltk.download('punkt')
 nltk.download('stopwords')
-#plt.rcParams.update({'axes.facecolor':'black'})
-#plt.style.use('seaborn-v0_8-dark-palette')
+sns.set_theme(style="darkgrid", palette="pastel")
 stop_words = set(stopwords.words('english'))
 geolocator = Nominatim(user_agent = "geoapiExercises")
 ps = PorterStemmer()
@@ -116,9 +115,8 @@ if st.button('Print Report'):
 
     with col1:
         # Count plot to show the distribution of comments between the various countries whose people tweeted
-        with sns.axes_style("darkgrid"):
-            plt.figure(figsize = (10,8), facecolor = None)
-            sns.countplot(data = df ,y = 'Countries',orient="v",order = df['Countries'].value_counts().index)    
+        plt.figure(figsize = (10,8), facecolor = None)
+        sns.countplot(data = df ,y = 'Countries',orient="v",order = df['Countries'].value_counts().index)                
         time = datetime.now().strftime("%H%M%S")    
         fname = input_sms.replace('#','') + time + '.jpg'
         plt.savefig(fname,bbox_inches = 'tight')
@@ -146,9 +144,9 @@ if st.button('Print Report'):
         
         
     with col2:   
-        with sns.axes_style("darkgrid"):
-            plt.figure(figsize = (10,8), facecolor = None)            
-            sns.countplot(data = df ,y = 'Countries',orient="v",hue = 'reaction',order = df['Countries'].value_counts().index)
+        
+        plt.figure(figsize = (10,8), facecolor = None)            
+        sns.countplot(data = df ,y = 'Countries',orient="v",hue = 'reaction',order = df['Countries'].value_counts().index)
             
         
 
