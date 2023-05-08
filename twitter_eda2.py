@@ -22,7 +22,7 @@ import time
 #Do necessary downloads and initliate classes 
 nltk.download('punkt')
 nltk.download('stopwords')
-sns.set_theme(style="darkgrid", palette="pastel")
+#sns.set_theme(style="darkgrid", palette="pastel")
 stop_words = set(stopwords.words('english'))
 geolocator = Nominatim(user_agent = "geoapiExercises")
 ps = PorterStemmer()
