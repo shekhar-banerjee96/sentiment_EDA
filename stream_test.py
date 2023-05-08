@@ -113,8 +113,7 @@ if st.button('Print Report'):
 
     with col1:
         # Count plot to show the distribution of comments between the various countries whose people tweeted
-        
-        fig = plt.figure(figsize = (10,8))
+        fig , ax = plt.subplots()
         sns.countplot(data = df ,y = 'Countries',orient="v" ,order = df['Countries'].value_counts().iloc[:20].index)    
         plt.title('Top Contributing Countries')
         plt.ylabel('Countries', fontsize=12)
