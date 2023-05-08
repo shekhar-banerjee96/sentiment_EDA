@@ -5,6 +5,5 @@ import seaborn as sns
 
 fig , ax = plt.subplots()
 df = sns.load_dataset("penguins")
-sns.barplot(data=df, x="island", y="body_mass_g",ax=ax)
-
+sns.countplot(data = df,x = 'island')
 st.pyplot(fig)
