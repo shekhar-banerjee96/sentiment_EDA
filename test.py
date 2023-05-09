@@ -71,8 +71,11 @@ input_sms = st.text_area("Enter the hastag example #India , #Tesla")
 def countries(x):
     #This function will use the Geolocator API and find the Country of the user. 
     # we split the reslt and provide the last part which contains tge country name.
-  location = geolocator.geocode(x,language='en',timeout=None)
-  return str(location.raw['display_name'].split(',')[-1]).strip()
+  try:
+    location = geolocator.geocode(x,language='en',timeout=None)
+    return str(location.raw['display_name'].split(',')[-1]).strip()
+  except :
+    return None
 
 
 st.header(countries('Delhi'))
