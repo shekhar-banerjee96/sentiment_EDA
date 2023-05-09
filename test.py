@@ -78,6 +78,8 @@ def countries(x):
     except :
         return None
     
+st.header(countries('Delhi'))
+    
 def basic_clean(x,type) :
 
   ignore  = ['rt','https','u']  
