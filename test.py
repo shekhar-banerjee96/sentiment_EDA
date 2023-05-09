@@ -1,4 +1,5 @@
 import streamlit as st
+st.set_page_config(layout="wide")
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -10,7 +11,7 @@ st.pyplot(fig)
 
 #import Libraries
 import streamlit as st
-st.set_page_config(layout="wide")
+
 import pandas as pd
 import nltk ,emoji , re ,string , pickle
 from nltk.corpus import stopwords
