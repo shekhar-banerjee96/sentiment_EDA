@@ -108,7 +108,7 @@ def basic_clean(x,type) :
 
         
       
-popular_tweets = tw.Cursor(api.search_tweets,q='#china',lang="en",tweet_mode="extended").items(10)
+popular_tweets = tw.Cursor(api.search_tweets,q='#china',lang="en",tweet_mode="extended").items(50)
 for tweet in popular_tweets:
     #pull data fields as per requirements , for now pulling timestamp which will act like id , user name , location , tweet text
     # we will geolocator api to find the country name from the location data.
