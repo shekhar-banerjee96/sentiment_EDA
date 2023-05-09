@@ -105,7 +105,7 @@ def basic_clean(x,type) :
 
         
       
-popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(20)
+popular_tweets = tw.Cursor(api.search_tweets,q=input_sms,lang="en",tweet_mode="extended").items(5)
 for tweet in popular_tweets:
     #pull data fields as per requirements , for now pulling timestamp which will act like id , user name , location , tweet text
     # we will geolocator api to find the country name from the location data.
@@ -118,4 +118,4 @@ for tweet in popular_tweets:
     df = pd.concat([delta , df ])
 
 print('Data Imported')
-st.dataframe(df.head())
+st.dataframe(df)
