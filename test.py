@@ -75,8 +75,7 @@ def countries(x):
     try:
         location = geolocator.geocode(x,language='en',timeout=None)
         return str(location.raw['display_name'].split(',')[-1]).strip()
-    except :
-        return None
+
     
 st.header(countries('Delhi'))
     
