@@ -25,7 +25,7 @@ plt.rcParams.update({'axes.facecolor':'black'})
 sns.set_style("darkgrid")
 
 stop_words = set(stopwords.words('english'))
-geolocator = Nominatim(user_agent = "geoapiExercises")
+geolocator = Nominatim(user_agent = "sentiment")
 ps = PorterStemmer()
 
 #Set Credentials for Tweepy API
