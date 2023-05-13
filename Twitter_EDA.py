@@ -171,6 +171,7 @@ if st.button('Print Report'):
         wc = WordCloud(width = 500 , height = 500).generate(body)
         plt.figure(figsize = (12, 8), facecolor = None)
         plt.imshow(wc)
+        plt.axis("off")
         st.header("Negative Comment Wordcloud")
         time = datetime.now().strftime("%H%M%S")  
         fname = input_sms.replace('#','') + time + '_neg_wordcloud.jpg'  
@@ -184,6 +185,7 @@ if st.button('Print Report'):
         wc = WordCloud(width = 500 , height = 500).generate(body)
         plt.figure(figsize = (12, 8), facecolor = None)
         plt.imshow(wc)
+        plt.axis("off")
         st.header("Positive Comment Wordcloud")
         time = datetime.now().strftime("%H%M%S")  
         fname = input_sms.replace('#','') + time + '_pos_wordcloud.jpg'  

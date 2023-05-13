@@ -161,6 +161,7 @@ if st.button('Print Report'):
         body = ''.join(df[df['reaction'] == 'Pos']['text'])
         wc = WordCloud(width = 500 , height = 500).generate(body)
         plt.imshow(wc,interpolation='bilinear')
+        plt.axis("off")
         st.header("Positive Comment Wordcloud")
         st.pyplot()
         
@@ -170,6 +171,7 @@ if st.button('Print Report'):
         ody = ''.join(df[df['reaction'] == 'Neg']['text'])
         wc = WordCloud(width = 500 , height = 500).generate(body)
         plt.imshow(wc,interpolation='bilinear')
+        plt.axis("off")
         st.header("Negative Comment Wordcloud")
         st.pyplot()
         
